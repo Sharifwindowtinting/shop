@@ -8007,15 +8007,9 @@ main > section:not(.hero)::before {
     border-radius: 10px;
   }
 
+  .offer-cta-cover,
   .offer-live-cta {
-    left: 8.6%;
-    bottom: 15%;
-    min-width: 44%;
-    min-height: 36px;
-    padding: 9px 14px;
-    justify-content: space-between;
-    gap: 10px;
-    font-size: clamp(0.68rem, 3vw, 0.86rem);
+    display: none !important;
   }
 
   #packages.package-section {
