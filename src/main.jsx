@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Analytics } from '@vercel/analytics/react';
 import {
   ArrowRight,
   CalendarCheck,
@@ -1096,6 +1097,7 @@ function App() {
       <a className="floating-call" href={phoneHref} aria-label={`Call Sharif Window Tinting at ${phoneDisplay}`}>
         <Phone size={20} aria-hidden="true" />
       </a>
+      <Analytics />
     </>
   );
 }
