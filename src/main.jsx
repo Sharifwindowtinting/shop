@@ -31,6 +31,33 @@ const address = '3133 Dwight Rd, Ste 100, Elk Grove, CA 95758';
 const googleReviewsHref =
   'https://www.google.com/search?q=sharif+window+tinting#lrd=0x809ac1e4aa0ec785:0x4cb4f14a2f3d1852,1,,,';
 
+const imageSizes = {
+  '/assets/logo.webp': { width: 1046, height: 400 },
+  '/assets/gallery-black-car.jpg': { width: 800, height: 1280 },
+  '/assets/services-premium-installation.jpg': { width: 469, height: 832 },
+  '/assets/service-window-tint-install.png': { width: 1080, height: 810 },
+  '/assets/service-ppf-install.jpg': { width: 1800, height: 1192 },
+  '/assets/service-commercial.jpg': { width: 1200, height: 801 },
+  '/assets/service-residential.jpg': { width: 1200, height: 816 },
+  '/assets/package-carbon-film-clean.png': { width: 1536, height: 1024 },
+  '/assets/package-ceramic-film-clean.png': { width: 1536, height: 1024 },
+  '/assets/package-nano-ceramic-clean.png': { width: 1536, height: 1024 },
+  '/assets/ppf-packages/partial-hood.png': { width: 750, height: 309 },
+  '/assets/ppf-packages/full-hood.png': { width: 750, height: 311 },
+  '/assets/ppf-packages/partial-front.png': { width: 771, height: 323 },
+  '/assets/ppf-packages/partial-front-mirrors.png': { width: 750, height: 302 },
+  '/assets/ppf-packages/full-front.png': { width: 750, height: 305 },
+  '/assets/ppf-packages/full-vehicle.png': { width: 750, height: 306 },
+  '/assets/compare-tint-before.png': { width: 1672, height: 941 },
+  '/assets/compare-tint-after.png': { width: 1672, height: 941 },
+  '/assets/compare-ppf-before.png': { width: 1672, height: 941 },
+  '/assets/compare-ppf-after.png': { width: 1672, height: 941 },
+};
+
+function imageSize(src) {
+  return imageSizes[src] || {};
+}
+
 const navItems = [
   ['Services', '#services'],
   ['Packages', '#packages'],
@@ -340,7 +367,7 @@ function Header() {
   return (
     <header className="site-header">
       <a className="brand" href="#top" aria-label="Sharif Window Tinting home">
-        <img src="/assets/logo.webp" alt="Sharif Window Tinting" />
+        <img src="/assets/logo.webp" alt="Sharif Window Tinting" {...imageSize('/assets/logo.webp')} />
       </a>
       <nav className={open ? 'nav is-open' : 'nav'} aria-label="Primary navigation">
         {navItems.map(([label, href]) => (
@@ -376,7 +403,7 @@ function Hero() {
           <source src="/assets/premium-oc-bg.mp4" type="video/mp4" />
           <source src="/assets/hero-ppf-loop.webm" type="video/webm" />
         </video>
-        <img src="/assets/gallery-black-car.jpg" alt="" />
+        <img src="/assets/gallery-black-car.jpg" alt="" {...imageSize('/assets/gallery-black-car.jpg')} />
         <div className="hero-shine" />
       </div>
       <div className="container hero-shell">
@@ -441,7 +468,12 @@ function Services() {
 
         <div className="services-board">
           <div className="services-board-visual" data-reveal>
-            <img src="/assets/services-premium-installation.jpg" alt="Professional window film installation by Sharif Window Tinting" loading="eager" />
+            <img
+              src="/assets/services-premium-installation.jpg"
+              alt="Professional window film installation by Sharif Window Tinting"
+              loading="eager"
+              {...imageSize('/assets/services-premium-installation.jpg')}
+            />
             <div className="services-board-overlay">
               <p>Sharif Window Tinting</p>
               <strong>Premium film installation</strong>
@@ -455,7 +487,12 @@ function Services() {
               return (
                 <article className="service-card" key={service.title} data-reveal>
                   <div className="service-thumb">
-                    <img src={service.image} alt={`${service.title} by Sharif Window Tinting`} loading={index === 0 ? 'eager' : 'lazy'} />
+                    <img
+                      src={service.image}
+                      alt={`${service.title} by Sharif Window Tinting`}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      {...imageSize(service.image)}
+                    />
                   </div>
                   <div className="service-body">
                     <div className="service-card-top">
@@ -619,7 +656,7 @@ function Packages() {
           </div>
           <div className="package-detail">
             <div className={`package-visual package-visual-${activeGroup.key} coverage-${activeOption.coverage}`}>
-              <img key={activeVisual} src={activeVisual} alt={activeAlt} loading="lazy" />
+              <img key={activeVisual} src={activeVisual} alt={activeAlt} loading="lazy" {...imageSize(activeVisual)} />
             </div>
             <article className="package-copy">
               <p className="package-kicker">{activeGroup.eyebrow}</p>
@@ -721,9 +758,21 @@ function WorkGallery() {
                 className="comparison-slider"
                 style={{ '--split': `${sliderPositions[item.key]}%` }}
               >
-                <img className="comparison-image comparison-after" src={item.after.src} alt={item.after.alt} loading="lazy" />
+                <img
+                  className="comparison-image comparison-after"
+                  src={item.after.src}
+                  alt={item.after.alt}
+                  loading="lazy"
+                  {...imageSize(item.after.src)}
+                />
                 <div className="comparison-before-wrap">
-                  <img className="comparison-image comparison-before" src={item.before.src} alt={item.before.alt} loading="lazy" />
+                  <img
+                    className="comparison-image comparison-before"
+                    src={item.before.src}
+                    alt={item.before.alt}
+                    loading="lazy"
+                    {...imageSize(item.before.src)}
+                  />
                 </div>
                 <div className="comparison-copy comparison-copy-before">
                   <strong>{item.before.label}</strong>
@@ -1022,7 +1071,7 @@ function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <img src="/assets/logo.webp" alt="Sharif Window Tinting" />
+          <img src="/assets/logo.webp" alt="Sharif Window Tinting" {...imageSize('/assets/logo.webp')} />
           <p>Window tint, paint protection film, and ceramic coating for Sacramento and Elk Grove drivers.</p>
           <div className="footer-actions">
             <a href={phoneHref}>Call {phoneDisplay}</a>
@@ -1102,4 +1151,6 @@ function App() {
   );
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+const rootElement = document.getElementById('root');
+rootElement.replaceChildren();
+createRoot(rootElement).render(<App />);
