@@ -1,0 +1,17 @@
+{
+  "name": "Sharif Window Tinting",
+  "short_name": "Sharif Tint",
+  "description": "Window tint, paint protection film, ceramic coating, commercial tint, and residential window film in Sacramento and Elk Grove.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0d12",
+  "theme_color": "#0b0d12",
+  "icons": [
+    {
+      "src": "/assets/logo.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ]
+}
