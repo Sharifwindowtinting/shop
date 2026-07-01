@@ -277,15 +277,6 @@ export default async function handler(request, response) {
       return;
     }
 
-    if (!resendApiKey) {
-      response.status(503).json({
-        ok: false,
-        error: 'Resend API key is not configured yet.',
-        code: 'missing_resend_api_key',
-      });
-      return;
-    }
-
     const lead = {
       name,
       contact,
@@ -304,6 +295,25 @@ export default async function handler(request, response) {
       reason: 'supabase_request_failed',
       details: String(error?.message || error).slice(0, 500),
     }));
+
+    if (!resendApiKey) {
+      if (storage.ok) {
+        response.status(200).json({
+          ok: true,
+          storage,
+          email: { ok: false, skipped: true, reason: 'missing_resend_api_key' },
+        });
+        return;
+      }
+
+      response.status(503).json({
+        ok: false,
+        error: 'Resend API key is not configured yet, and Supabase did not save the lead.',
+        code: 'missing_resend_api_key',
+        storage,
+      });
+      return;
+    }
 
     const resendResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -329,16 +339,30 @@ export default async function handler(request, response) {
 
     if (!resendResponse.ok) {
       const details = await resendResponse.text();
+      if (storage.ok) {
+        response.status(200).json({
+          ok: true,
+          storage,
+          email: {
+            ok: false,
+            reason: 'resend_rejected',
+            details: details.slice(0, 500),
+          },
+        });
+        return;
+      }
+
       response.status(502).json({
         ok: false,
-        error: 'Resend did not accept the lead email.',
+        error: 'Resend did not accept the lead email, and Supabase did not save the lead.',
         details: details.slice(0, 500),
+        storage,
       });
       return;
     }
 
     const result = await resendResponse.json();
-    response.status(200).json({ ok: true, id: result.id, storage });
+    response.status(200).json({ ok: true, id: result.id, email: { ok: true, id: result.id }, storage });
   } catch (error) {
     response.status(500).json({ ok: false, error: 'Could not send lead email.' });
   }

@@ -48,7 +48,7 @@ create table if not exists leads (
 );
 ```
 
-Supabase is treated as a backup. If the table is not ready, Resend can still send the lead email and the customer will not be blocked.
+Supabase is treated as lead capture storage. If Supabase saves the lead but Resend has an email issue, the customer can still see success because the lead was captured. If Supabase is not configured, Resend can still send the lead email.
 
 ## Local Testing
 
