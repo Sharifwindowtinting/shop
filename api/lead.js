@@ -161,6 +161,69 @@ function buildEmailText(lead) {
     .join('\n');
 }
 
+function buildSupabasePayload(lead) {
+  return {
+    name: lead.name,
+    phone: lead.phone || null,
+    email: lead.email || null,
+    contact: lead.contact || null,
+    vehicle: lead.vehicle,
+    service_interest: lead.serviceInterest,
+    notes: lead.notes || null,
+    page: lead.page || null,
+    submitted_at: lead.submittedAt,
+    source: 'website',
+  };
+}
+
+async function saveLeadToSupabase(lead) {
+  const supabaseUrl = clean(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL, 500);
+  const supabaseKey = clean(
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+      process.env.SUPABASE_ANON_KEY ||
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    2000,
+  );
+  const table = clean(process.env.SUPABASE_LEADS_TABLE || 'leads', 80);
+
+  if (!supabaseUrl || !supabaseKey || !table) {
+    return { ok: false, skipped: true, reason: 'missing_supabase_env' };
+  }
+
+  const endpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/${encodeURIComponent(table)}`;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 4000);
+  let supabaseResponse;
+
+  try {
+    supabaseResponse = await fetch(endpoint, {
+      method: 'POST',
+      signal: controller.signal,
+      headers: {
+        apikey: supabaseKey,
+        Authorization: `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify(buildSupabasePayload(lead)),
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
+
+  if (!supabaseResponse.ok) {
+    const details = await supabaseResponse.text();
+    return {
+      ok: false,
+      skipped: false,
+      reason: 'supabase_insert_failed',
+      details: details.slice(0, 500),
+    };
+  }
+
+  return { ok: true };
+}
+
 async function readBody(request) {
   if (typeof request.body === 'string') {
     return JSON.parse(request.body || '{}');
@@ -235,6 +298,13 @@ export default async function handler(request, response) {
       submittedAt,
     };
 
+    const storage = await saveLeadToSupabase(lead).catch((error) => ({
+      ok: false,
+      skipped: false,
+      reason: 'supabase_request_failed',
+      details: String(error?.message || error).slice(0, 500),
+    }));
+
     const resendResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -268,7 +338,7 @@ export default async function handler(request, response) {
     }
 
     const result = await resendResponse.json();
-    response.status(200).json({ ok: true, id: result.id });
+    response.status(200).json({ ok: true, id: result.id, storage });
   } catch (error) {
     response.status(500).json({ ok: false, error: 'Could not send lead email.' });
   }

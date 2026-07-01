@@ -1,6 +1,7 @@
 # Resend Lead Form Setup
 
 The quote form submits to `/api/lead`, and the Vercel API route sends the lead by email through Resend.
+If Supabase env vars are configured, the same route also saves a backup copy of the lead.
 
 ## Required Environment Variables
 
@@ -17,6 +18,37 @@ For launch, make sure the `getproclix.com` domain is verified in Resend. Resend 
 ```text
 RESEND_FROM=Sharif Window Tinting <contact@getproclix.com>
 ```
+
+## Optional Supabase Backup
+
+Add these only if you want every lead saved in Supabase too:
+
+```text
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+SUPABASE_LEADS_TABLE=leads
+```
+
+Recommended `leads` table columns:
+
+```sql
+create table if not exists leads (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  phone text,
+  email text,
+  contact text,
+  vehicle text not null,
+  service_interest text,
+  notes text,
+  page text,
+  source text default 'website',
+  submitted_at timestamptz not null,
+  created_at timestamptz default now()
+);
+```
+
+Supabase is treated as a backup. If the table is not ready, Resend can still send the lead email and the customer will not be blocked.
 
 ## Local Testing
 

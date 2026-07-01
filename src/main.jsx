@@ -930,14 +930,18 @@ function QuoteForm() {
     setStatusType('pending');
     setStatus('Sending your quote request...');
 
+    let timeout;
     try {
       const contact = [form.phone, form.email].filter(Boolean).join(' / ');
+      const controller = new AbortController();
+      timeout = window.setTimeout(() => controller.abort(), 15000);
       const response = await fetch('/api/lead', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
+        signal: controller.signal,
         body: JSON.stringify({
           name: form.name,
           phone: form.phone,
@@ -951,8 +955,10 @@ function QuoteForm() {
         }),
       });
 
+      const result = await response.json().catch(() => ({}));
+
       if (!response.ok) {
-        throw new Error('Resend did not accept the request.');
+        throw new Error(result.error || 'Resend did not accept the request.');
       }
 
       setForm({
@@ -968,8 +974,13 @@ function QuoteForm() {
       setStatus('Request sent. Sharif Window Tinting will follow up shortly.');
     } catch (error) {
       setStatusType('error');
-      setStatus(`We could not send the form automatically. Please call ${phoneDisplay} or email ${email}.`);
+      setStatus(
+        error?.name === 'AbortError'
+          ? `The request timed out. Please try again, call ${phoneDisplay}, or email ${email}.`
+          : `We could not send the form automatically. Please call ${phoneDisplay} or email ${email}.`,
+      );
     } finally {
+      window.clearTimeout(timeout);
       setIsSubmitting(false);
     }
   }
