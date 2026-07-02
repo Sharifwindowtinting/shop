@@ -29,7 +29,7 @@ Recommended production env vars:
 ```text
 RESEND_API_KEY=your_resend_api_key
 LEAD_NOTIFY_TO=sharifwindowtinting@gmail.com
-RESEND_FROM=Sharif Window Tinting <contact@getproclix.com>
+RESEND_FROM=Sharif Window Tinting <quotes@sharifwindowtinting.com>
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 SUPABASE_LEADS_TABLE=leads

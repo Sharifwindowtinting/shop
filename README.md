@@ -24,7 +24,7 @@ Required environment variables:
 ```text
 RESEND_API_KEY=
 LEAD_NOTIFY_TO=sharifwindowtinting@gmail.com
-RESEND_FROM=Sharif Window Tinting <contact@getproclix.com>
+RESEND_FROM=Sharif Window Tinting <quotes@sharifwindowtinting.com>
 ```
 
 See `RESEND_SETUP.md` for more detail.

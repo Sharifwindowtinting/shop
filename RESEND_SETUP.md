@@ -10,13 +10,13 @@ Add these in Vercel under `Settings -> Environment Variables`, then redeploy:
 ```text
 RESEND_API_KEY=your_resend_api_key
 LEAD_NOTIFY_TO=sharifwindowtinting@gmail.com
-RESEND_FROM=Sharif Window Tinting <contact@getproclix.com>
+RESEND_FROM=Sharif Window Tinting <quotes@sharifwindowtinting.com>
 ```
 
-For launch, make sure the `getproclix.com` domain is verified in Resend. Resend will reject messages to Gmail recipients unless the `from` address uses a verified domain.
+For launch, make sure the `sharifwindowtinting.com` domain is verified in Resend. Resend will reject messages to Gmail recipients unless the `from` address uses a verified domain.
 
 ```text
-RESEND_FROM=Sharif Window Tinting <contact@getproclix.com>
+RESEND_FROM=Sharif Window Tinting <quotes@sharifwindowtinting.com>
 ```
 
 ## Optional Supabase Backup

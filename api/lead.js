@@ -66,85 +66,72 @@ function leadRows(lead) {
 function buildEmailHtml(lead) {
   const displayPhone = lead.phone || 'Not provided';
   const displayEmail = lead.email || 'Not provided';
+  const phoneHref = escapeHtml(lead.phone);
+  const emailHref = escapeHtml(lead.email);
   const callAction = lead.phone
-    ? `<a href="tel:${escapeHtml(lead.phone)}" style="display:block;text-align:center;text-decoration:none;background:#ff5b1f;color:#ffffff;border-radius:14px;padding:15px 18px;font-size:15px;font-weight:800;">Call lead</a>`
-    : '<span style="display:block;text-align:center;background:#f1f3f6;color:#8b92a1;border-radius:14px;padding:15px 18px;font-size:15px;font-weight:800;">No phone provided</span>';
+    ? `<a href="tel:${phoneHref}" style="display:block;text-align:center;text-decoration:none;background:#f05a28;color:#ffffff;border-radius:12px;padding:14px 12px;font-size:16px;font-weight:800;">Call ${escapeHtml(displayPhone)}</a>`
+    : '<span style="display:block;text-align:center;background:#eef0f3;color:#7a828f;border-radius:12px;padding:14px 12px;font-size:16px;font-weight:800;">No phone provided</span>';
+  const textAction = lead.phone
+    ? `<a href="sms:${phoneHref}" style="display:block;text-align:center;text-decoration:none;background:#111827;color:#ffffff;border-radius:12px;padding:14px 12px;font-size:16px;font-weight:800;">Text lead</a>`
+    : '';
   const emailAction = lead.email
-    ? `<a href="mailto:${escapeHtml(lead.email)}" style="display:block;text-align:center;text-decoration:none;background:#111827;color:#ffffff;border-radius:14px;padding:15px 18px;font-size:15px;font-weight:800;">Email lead</a>`
-    : '<span style="display:block;text-align:center;background:#f1f3f6;color:#8b92a1;border-radius:14px;padding:15px 18px;font-size:15px;font-weight:800;">No email provided</span>';
+    ? `<a href="mailto:${emailHref}" style="display:block;text-align:center;text-decoration:none;background:#ffffff;color:#111827;border:1px solid #d8dde5;border-radius:12px;padding:13px 12px;font-size:16px;font-weight:800;">Email lead</a>`
+    : '';
 
   const rows = leadRows(lead)
     .map(([label, value]) => `
-      <tr>
-        <td style="padding:14px 0;color:#6b7280;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid #eee7df;width:180px;vertical-align:top;">${escapeHtml(label)}</td>
-        <td style="padding:14px 0;color:#121721;font-size:16px;font-weight:700;line-height:1.45;border-bottom:1px solid #eee7df;vertical-align:top;">${escapeHtml(value || 'Not provided')}</td>
-      </tr>
+      <div style="padding:14px 0;border-bottom:1px solid #e8edf3;">
+        <div style="margin:0 0 5px;color:#6b7280;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;">${escapeHtml(label)}</div>
+        <div style="margin:0;color:#111827;font-size:17px;font-weight:800;line-height:1.45;word-break:break-word;overflow-wrap:anywhere;">${escapeHtml(value || 'Not provided')}</div>
+      </div>
     `)
     .join('');
 
   return `
-    <div style="margin:0;padding:0;background:#f4eee6;font-family:Arial,Helvetica,sans-serif;">
-      <div style="max-width:720px;margin:0 auto;padding:34px 18px;">
-        <div style="background:#090b10;border-radius:24px;overflow:hidden;box-shadow:0 24px 60px rgba(17,19,24,.18);">
-          <div style="padding:34px 34px 30px;background:#0b0d12;background-image:linear-gradient(135deg,#11151d 0%,#08090d 55%,#2a1008 100%);color:#fff;">
-            <table role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;">
-              <tr>
-                <td style="vertical-align:top;">
-                  <p style="margin:0 0 14px;color:#ff6a2a;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;">New quote request</p>
-                  <h1 style="margin:0;color:#ffffff;font-size:34px;line-height:1.05;font-weight:800;letter-spacing:-.03em;">Sharif Window Tinting</h1>
-                </td>
-                <td style="text-align:right;vertical-align:top;">
-                  <span style="display:inline-block;padding:10px 14px;border:1px solid rgba(255,106,42,.45);border-radius:999px;color:#ffd5c3;background:rgba(255,106,42,.12);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;">Website lead</span>
-                </td>
-              </tr>
-            </table>
-            <div style="height:1px;background:linear-gradient(90deg,#ff6a2a,rgba(255,106,42,0));margin:26px 0 24px;"></div>
-            <p style="margin:0;color:#d9dde7;font-size:18px;line-height:1.55;">A customer requested pricing for <strong style="color:#fff;">${escapeHtml(lead.serviceInterest || 'service')}</strong> on a <strong style="color:#fff;">${escapeHtml(lead.vehicle || 'vehicle')}</strong>.</p>
+    <div style="margin:0;padding:0;background:#f6f1eb;font-family:Arial,Helvetica,sans-serif;color:#111827;">
+      <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${escapeHtml(lead.name)} requested ${escapeHtml(lead.serviceInterest || 'a quote')} for ${escapeHtml(lead.vehicle || 'a vehicle')}.</div>
+      <div style="width:100%;max-width:560px;margin:0 auto;padding:14px 10px;box-sizing:border-box;">
+        <div style="background:#ffffff;border:1px solid #eadfd5;border-radius:18px;overflow:hidden;">
+          <div style="padding:20px 18px;background:#0b0d12;color:#ffffff;">
+            <p style="margin:0 0 8px;color:#ff6a2a;font-size:13px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;">New quote request</p>
+            <h1 style="margin:0;color:#ffffff;font-size:24px;line-height:1.18;font-weight:900;">${escapeHtml(lead.name)}</h1>
+            <p style="margin:9px 0 0;color:#d6dce5;font-size:15px;line-height:1.45;">Sharif Window Tinting website lead</p>
           </div>
 
-          <div style="background:#ffffff;padding:28px 34px 32px;">
-            <div style="margin:0 0 22px;padding:22px;border:1px solid #f0e3d8;border-radius:18px;background:#fff8f3;">
-              <p style="margin:0 0 8px;color:#ff5b1f;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;">Customer</p>
-              <h2 style="margin:0 0 14px;color:#111827;font-size:30px;line-height:1.15;font-weight:800;letter-spacing:-.02em;">${escapeHtml(lead.name)}</h2>
-              <table role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;">
-                <tr>
-                  <td style="padding:0 10px 0 0;vertical-align:top;width:50%;">
-                    <p style="margin:0 0 5px;color:#6b7280;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Phone</p>
-                    <p style="margin:0;color:#111827;font-size:16px;font-weight:800;line-height:1.4;">${escapeHtml(displayPhone)}</p>
-                  </td>
-                  <td style="padding:0 0 0 10px;vertical-align:top;width:50%;">
-                    <p style="margin:0 0 5px;color:#6b7280;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Email</p>
-                    <p style="margin:0;color:#111827;font-size:16px;font-weight:800;line-height:1.4;word-break:break-word;">${escapeHtml(displayEmail)}</p>
-                  </td>
-                </tr>
-              </table>
+          <div style="padding:18px;">
+            <div style="padding:14px;border:1px solid #f1ded2;border-radius:14px;background:#fff8f3;">
+              <div style="margin:0 0 4px;color:#6b7280;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;">Phone</div>
+              <div style="margin:0 0 12px;color:#111827;font-size:22px;font-weight:900;line-height:1.25;word-break:break-word;">${escapeHtml(displayPhone)}</div>
+
+              <div style="margin:0 0 4px;color:#6b7280;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;">Service</div>
+              <div style="margin:0 0 12px;color:#111827;font-size:19px;font-weight:900;line-height:1.3;">${escapeHtml(lead.serviceInterest || 'Not provided')}</div>
+
+              <div style="margin:0 0 4px;color:#6b7280;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;">Vehicle</div>
+              <div style="margin:0;color:#111827;font-size:19px;font-weight:900;line-height:1.3;">${escapeHtml(lead.vehicle || 'Not provided')}</div>
             </div>
 
-            <table role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;margin:0 0 24px;">
-              <tr>
-                <td style="padding:0 8px 0 0;width:50%;">
-                  ${callAction}
-                </td>
-                <td style="padding:0 0 0 8px;width:50%;">
-                  ${emailAction}
-                </td>
-              </tr>
-            </table>
-
-            <div style="margin:0 0 22px;">
-              <p style="margin:0 0 12px;color:#111827;font-size:18px;font-weight:800;">Lead details</p>
-              <table role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;">
-                ${rows}
-              </table>
+            <div style="margin:14px 0 16px;">
+              ${callAction}
+              ${textAction ? `<div style="height:10px;line-height:10px;">&nbsp;</div>${textAction}` : ''}
+              ${emailAction ? `<div style="height:10px;line-height:10px;">&nbsp;</div>${emailAction}` : ''}
             </div>
 
-            <div style="padding:18px 20px;border-radius:16px;background:#111827;">
-              <p style="margin:0 0 6px;color:#ffb391;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;">Follow-up note</p>
-              <p style="margin:0;color:#f9fafb;font-size:15px;line-height:1.55;">Reply quickly with a quote range, ask for photos if needed, and confirm tint percentage or PPF coverage goals.</p>
+            <div style="margin:0 0 16px;padding:14px;border:1px solid #e8edf3;border-radius:14px;background:#ffffff;">
+              <div style="margin:0 0 4px;color:#6b7280;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;">Email</div>
+              <div style="margin:0;color:#111827;font-size:16px;font-weight:800;line-height:1.45;word-break:break-word;overflow-wrap:anywhere;">${escapeHtml(displayEmail)}</div>
+            </div>
+
+            <div style="margin:0 0 16px;">
+              <p style="margin:0 0 2px;color:#111827;font-size:18px;font-weight:900;">Lead details</p>
+              ${rows}
+            </div>
+
+            <div style="padding:14px;border-radius:14px;background:#111827;">
+              <p style="margin:0;color:#f9fafb;font-size:14px;line-height:1.5;">Reply quickly with a quote range, ask for photos if needed, and confirm tint percentage or PPF coverage goals.</p>
             </div>
           </div>
         </div>
-        <p style="margin:18px 0 0;text-align:center;color:#6b7280;font-size:13px;line-height:1.5;">This lead came from the quote form on the Sharif Window Tinting website.</p>
+        <p style="margin:12px 4px 0;text-align:center;color:#6b7280;font-size:12px;line-height:1.45;">Lead received from sharifwindowtinting.com</p>
       </div>
     </div>
   `;
@@ -256,7 +243,7 @@ export default async function handler(request, response) {
   try {
     const resendApiKey = process.env.RESEND_API_KEY;
     const notifyTo = process.env.LEAD_NOTIFY_TO || 'sharifwindowtinting@gmail.com';
-    const from = process.env.RESEND_FROM || 'Sharif Window Tinting <contact@getproclix.com>';
+    const from = process.env.RESEND_FROM || 'Sharif Window Tinting <quotes@sharifwindowtinting.com>';
     const body = await readBody(request);
 
     if (clean(body.honey || body._honey)) {
