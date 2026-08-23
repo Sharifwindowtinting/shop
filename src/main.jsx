@@ -143,7 +143,7 @@ const packageGroups = [
       },
       {
         key: 'nano',
-        name: 'Nano-Ceramic',
+        name: 'IR Nano Ceramic',
         tag: 'Elite',
         title: 'Highest-performance tint for maximum comfort and clarity.',
         coverage: 'nano',
