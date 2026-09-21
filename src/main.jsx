@@ -24,6 +24,9 @@ import {
 import './responsive.css';
 import QuoteFeedback from './QuoteFeedback';
 import MobileSite from './MobileSite';
+import ServiceSelector from './ServiceSelector';
+import TintShadePicker from './TintShadePicker';
+import { packageGroups } from './packageGroups';
 import { comparisonItems } from './comparisonItems';
 
 const phoneDisplay = '(916) 690-3999';
@@ -67,192 +70,6 @@ const navItems = [
   ['Work', '#work'],
   ['Reviews', '#reviews'],
   ['Quote', '#quote'],
-];
-
-const services = [
-  {
-    icon: Sun,
-    title: 'Automotive Window Tint',
-    label: 'Cars & daily drivers',
-    image: '/assets/service-window-tint-install.png',
-    summary:
-      'Ceramic tint for heat rejection, privacy, glare control, and a cleaner look on Sacramento roads.',
-    details: ['Ceramic IR film options', 'Cleaner interior temperatures', 'Factory-style finish'],
-  },
-  {
-    icon: Shield,
-    title: 'Paint Protection Film',
-    label: 'PPF protection',
-    image: '/assets/service-ppf-install.jpg',
-    summary:
-      'Nearly invisible film that shields high-impact paint from rock chips, scratches, and road debris.',
-    details: ['Full front and full body coverage', 'Clean wrapped edges', 'Warranty-backed film options'],
-  },
-  {
-    icon: Gauge,
-    title: 'Commercial Window Tint',
-    label: 'Offices & storefronts',
-    image: '/assets/service-commercial.jpg',
-    summary:
-      'Professional film for storefronts, office glass, heat reduction, privacy, and a more polished business space.',
-    details: ['Solar heat control', 'Privacy and glare reduction', 'Clean commercial finish'],
-  },
-  {
-    icon: Sparkles,
-    title: 'Residential Window Tint',
-    label: 'Homes & glass doors',
-    image: '/assets/service-residential.jpg',
-    summary:
-      'Comfort-focused home window film that helps reduce heat, glare, fading, and harsh afternoon light.',
-    details: ['UV and furniture protection', 'Cooler rooms', 'Daytime privacy options'],
-  },
-];
-
-const packageGroups = [
-  {
-    key: 'tint',
-    label: 'Window Tint',
-    eyebrow: 'Heat, privacy, and UV control',
-    visual: '/assets/package-tint-coverage.png',
-    alt: 'White sedan diagram showing window tint coverage areas',
-    options: [
-      {
-        key: 'carbon',
-        name: 'Carbon Film',
-        tag: 'Privacy',
-        title: 'A clean factory-style shade for privacy and glare control.',
-        coverage: 'carbon',
-        visual: '/assets/package-carbon-film-clean.png',
-        alt: 'White sedan with carbon window tint installed',
-        quote: 'Quote after vehicle review',
-        bestFor: 'Clean look, privacy, and budget-conscious tint.',
-        includes: ['All side windows', 'Front windshield option', 'Back window', 'Sunroof option'],
-        copy:
-          'A strong entry point for drivers who want a darker look and a cleaner cabin feel without overcomplicating the build.',
-      },
-      {
-        key: 'ceramic',
-        name: 'Ceramic Film',
-        tag: 'Comfort',
-        title: 'Premium comfort with stronger heat rejection and cleaner clarity.',
-        coverage: 'ceramic',
-        visual: '/assets/package-ceramic-film-clean.png',
-        alt: 'White sedan with ceramic window tint installed',
-        quote: 'Quote after vehicle review',
-        bestFor: 'Sacramento heat, daily driving, and better cabin comfort.',
-        includes: ['All side windows', 'Front windshield option', 'Back window', 'Sunroof option'],
-        copy:
-          'The balanced choice for Sacramento heat: refined privacy, better interior comfort, UV protection, and a finish that looks intentional.',
-      },
-      {
-        key: 'nano',
-        name: 'IR Nano Ceramic',
-        tag: 'Elite',
-        title: 'Highest-performance tint for maximum comfort and clarity.',
-        coverage: 'nano',
-        visual: '/assets/package-nano-ceramic-clean.png',
-        alt: 'White sedan with nano ceramic window tint installed',
-        quote: 'Quote after vehicle review',
-        bestFor: 'Premium builds, strong IR rejection, and optical clarity.',
-        includes: ['All side windows', 'Front windshield option', 'Back window', 'Sunroof option'],
-        copy:
-          'Built for customers who want the cleanest optical finish, stronger infrared rejection, and a premium cabin feel every day.',
-      },
-    ],
-  },
-  {
-    key: 'ppf',
-    label: 'PPF Packages',
-    eyebrow: 'Rock chip and scratch defense',
-    visual: '/assets/ppf-packages/partial-hood.png',
-    alt: 'Paint protection film coverage diagram',
-    options: [
-      {
-        key: 'partial-hood',
-        name: 'Partial Hood',
-        tag: 'Starter',
-        title: 'Entry-level impact protection for the front hood area.',
-        coverage: 'partial-hood',
-        visual: '/assets/ppf-packages/partial-hood.png',
-        alt: 'Partial hood paint protection film coverage diagram',
-        quote: 'Quote after vehicle review',
-        bestFor: 'Light commuter protection and focused hood coverage.',
-        includes: ['Partial hood', 'Computer-cut film', 'Clean front-edge protection'],
-        copy:
-          'A simple way to protect the most visible front edge without building a full front-end package.',
-      },
-      {
-        key: 'full-hood',
-        name: 'Full Hood',
-        tag: 'Hood',
-        title: 'Full hood coverage for a cleaner, more complete front finish.',
-        coverage: 'full-hood',
-        visual: '/assets/ppf-packages/full-hood.png',
-        alt: 'Full hood paint protection film coverage diagram',
-        quote: 'Quote after vehicle review',
-        bestFor: 'Newer vehicles, dark paint, and cleaner hood protection.',
-        includes: ['Full hood', 'Wrapped edge options', 'Finish inspection'],
-        copy:
-          'A stronger hood-focused package for owners who want fewer visible film lines and better long-term finish protection.',
-      },
-      {
-        key: 'partial-front',
-        name: 'Partial Front',
-        tag: 'Value',
-        title: 'Balanced front-end protection for daily road debris.',
-        coverage: 'partial-front',
-        visual: '/assets/ppf-packages/partial-front.png',
-        alt: 'Partial front paint protection film coverage diagram',
-        quote: 'Quote after vehicle review',
-        bestFor: 'Daily drivers that need bumper plus partial panel coverage.',
-        includes: ['Partial hood', 'Partial fenders', 'Full bumper'],
-        copy:
-          'A practical package for drivers who want protection where road rash happens most often.',
-      },
-      {
-        key: 'partial-front-mirrors',
-        name: 'Partial Front + Mirrors',
-        tag: 'Popular',
-        title: 'Partial front protection with mirror coverage added.',
-        coverage: 'partial-front-mirrors',
-        visual: '/assets/ppf-packages/partial-front-mirrors.png',
-        alt: 'Partial front with mirrors paint protection film coverage diagram',
-        quote: 'Quote after vehicle review',
-        bestFor: 'Highway driving, daily use, and exposed mirror caps.',
-        includes: ['Partial hood', 'Partial fenders', 'Full bumper', 'Mirrors'],
-        copy:
-          'A smarter daily-driver package when mirror caps and front bumper take regular highway abuse.',
-      },
-      {
-        key: 'full-front',
-        name: 'Full Front',
-        tag: 'Best seller',
-        title: 'The cleanest front-end package for serious protection.',
-        coverage: 'full-front',
-        visual: '/assets/ppf-packages/full-front.png',
-        alt: 'Full front paint protection film coverage diagram',
-        quote: 'Quote after vehicle review',
-        bestFor: 'Performance cars, luxury builds, and fresh paint preservation.',
-        includes: ['Full hood', 'Full fenders', 'Full bumper', 'Mirrors'],
-        copy:
-          'The go-to package for owners who want full front-end defense with a premium, intentional finish.',
-      },
-      {
-        key: 'full-vehicle',
-        name: 'Full Vehicle',
-        tag: 'Flagship',
-        title: 'Complete exterior protection for long-term ownership.',
-        coverage: 'full-vehicle',
-        visual: '/assets/ppf-packages/full-vehicle.png',
-        alt: 'Full vehicle paint protection film coverage diagram',
-        quote: 'Quote after vehicle review',
-        bestFor: 'Black paint, luxury vehicles, exotics, and resale value.',
-        includes: ['All painted exterior panels', 'High-impact areas', 'Wrapped edge options'],
-        copy:
-          'Maximum paint preservation for owners who want the whole vehicle protected, not just the front.',
-      },
-    ],
-  },
 ];
 
 
@@ -403,80 +220,7 @@ function Hero() {
 }
 
 function Services() {
-  return (
-    <section id="services" className="services-section services-board-section">
-      <div className="container services-shell">
-        <div className="services-board-header" data-reveal>
-          <div>
-            <p className="eyebrow">Our services</p>
-            <h2>Tint, PPF, and flat-glass film installed with a clean shop finish.</h2>
-            <p>
-              A tighter service lineup for Sacramento drivers, homes, and commercial spaces. Built around heat
-              control, privacy, paint protection, and clean edges.
-            </p>
-          </div>
-          <a className="services-quote-link" href="#quote">
-            Get a quote
-            <ArrowRight size={17} aria-hidden="true" />
-          </a>
-        </div>
-
-        <div className="services-board">
-          <div className="services-board-visual" data-reveal>
-            <img
-              src="/assets/services-premium-installation.jpg"
-              alt="Professional window film installation by Sharif Window Tinting"
-              loading="eager"
-              {...imageSize('/assets/services-premium-installation.jpg')}
-            />
-            <div className="services-board-overlay">
-              <p>Sharif Window Tinting</p>
-              <strong>Premium film installation</strong>
-              <span>Sacramento & Elk Grove</span>
-            </div>
-          </div>
-
-          <div className="services-menu">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <article className="service-card" key={service.title} data-reveal>
-                  <div className="service-thumb">
-                    <img
-                      src={service.image}
-                      alt={`${service.title} by Sharif Window Tinting`}
-                      loading={index === 0 ? 'eager' : 'lazy'}
-                      {...imageSize(service.image)}
-                    />
-                  </div>
-                  <div className="service-body">
-                    <div className="service-card-top">
-                      <span><Icon size={17} aria-hidden="true" /></span>
-                      <p>0{index + 1}</p>
-                    </div>
-                    <h3>{service.title}</h3>
-                    <p>{service.summary}</p>
-                    <ul>
-                      {service.details.slice(0, 2).map((detail) => (
-                        <li key={detail}><Check size={16} aria-hidden="true" />{detail}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="services-spec-strip" data-reveal aria-label="Sharif Window Tinting installation standards">
-          <span>Automotive tint</span>
-          <span>Paint protection film</span>
-          <span>Commercial glass</span>
-          <span>Residential film</span>
-        </div>
-      </div>
-    </section>
-  );
+  return <ServiceSelector onSelect={service => window.dispatchEvent(new CustomEvent('quote-service', { detail: service }))} />;
 }
 
 function OfferBanner() {
@@ -501,6 +245,7 @@ function OfferBanner() {
 }
 
 function Packages() {
+  const [tintShade, setTintShade] = useState(null);
   const [groupKey, setGroupKey] = useState(packageGroups[0].key);
   const activeGroup = packageGroups.find((group) => group.key === groupKey) || packageGroups[0];
   const [optionKey, setOptionKey] = useState(activeGroup.options[0].key);
@@ -559,6 +304,14 @@ function Packages() {
     setOptionKey(nextGroup.options[0].key);
   }
 
+  function preparePackageQuote() {
+    window.dispatchEvent(new CustomEvent('quote-package', { detail: {
+                    services: activeGroup.key === 'tint' ? 'Window Tint' : 'Paint Protection Film',
+                    film: activeOption.name,
+                    shade: activeGroup.key === 'tint' ? tintShade : null,
+                  } }));
+  }
+
   const activeVisual = activeOption.visual || activeGroup.visual;
   const activeAlt = activeOption.alt || activeGroup.alt;
 
@@ -610,9 +363,13 @@ function Packages() {
             ))}
           </div>
           <div className="package-detail">
-            <div className={`package-visual package-visual-${activeGroup.key} coverage-${activeOption.coverage}`}>
-              <img key={activeVisual} src={activeVisual} alt={activeAlt} loading="lazy" {...imageSize(activeVisual)} />
-            </div>
+            {activeGroup.key === 'tint' ? (
+              <TintShadePicker value={tintShade} onChange={setTintShade} />
+            ) : (
+              <div className={`package-visual package-visual-${activeGroup.key} coverage-${activeOption.coverage}`}>
+                <img className="ppf-coverage-reveal" key={activeVisual} src={activeVisual} alt={activeAlt} loading="lazy" {...imageSize(activeVisual)} />
+              </div>
+            )}
             <article className="package-copy">
               <p className="package-kicker">{activeGroup.eyebrow}</p>
               <h3>{activeOption.name}</h3>
@@ -637,7 +394,7 @@ function Packages() {
                 ))}
               </ul>
               <div className="package-actions">
-                <a className="button button-primary" href="#quote">
+                <a className="button button-primary" href="#quote" onClick={preparePackageQuote}>
                   Start quote
                   <ArrowRight size={18} aria-hidden="true" />
                 </a>
@@ -868,11 +625,27 @@ function QuoteForm() {
     services: 'Tint + PPF + Ceramic Coating',
     message: '',
     _honey: '',
+    film: '',
+    shade: null,
   });
+
+  useEffect(() => {
+    const selectService = event => {
+      const names = { 'Window tint': 'Window Tint', 'Paint protection film': 'Paint Protection Film', 'Ceramic coating': 'Ceramic Coating' };
+      setForm(current => ({ ...current, services: names[event.detail] || event.detail, film: '', shade: null }));
+    };
+    const selectPackage = event => setForm(current => ({ ...current, ...event.detail }));
+    window.addEventListener('quote-service', selectService);
+    window.addEventListener('quote-package', selectPackage);
+    return () => {
+      window.removeEventListener('quote-service', selectService);
+      window.removeEventListener('quote-package', selectPackage);
+    };
+  }, []);
 
   function updateField(event) {
     const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
+    setForm((current) => ({ ...current, [name]: value, ...(name === 'services' ? { film: '', shade: null } : {}) }));
   }
 
   async function handleSubmit(event) {
@@ -904,7 +677,7 @@ function QuoteForm() {
           contact,
           vehicle: form.vehicle,
           services: form.services,
-          message: form.message,
+          message: [form.film && `Selected package: ${form.film}`, form.shade !== null && `Preferred tint: ${form.shade}% VLT`, form.message].filter(Boolean).join('\n'),
           honey: form._honey,
           page: window.location.href,
         }),
@@ -924,6 +697,8 @@ function QuoteForm() {
         services: 'Tint + PPF + Ceramic Coating',
         message: '',
         _honey: '',
+    film: '',
+    shade: null,
       });
       setStatusType('success');
       setStatus('Request sent. Sharif Window Tinting will follow up shortly.');
@@ -966,6 +741,7 @@ function QuoteForm() {
           data-reveal
         >
 
+          {form.film && <p className="quote-package-selection">Selected: {form.film}{form.shade !== null ? ` · ${form.shade}% tint` : ''}</p>}
           <label className="quote-honeypot" aria-hidden="true">
             Website
             <input name="_honey" value={form._honey} onChange={updateField} tabIndex="-1" autoComplete="off" />
@@ -1005,8 +781,8 @@ function QuoteForm() {
             <QuoteFeedback resetKey={statusType === 'success'} />
           </label>
           <label>
-            Vehicle
-            <input name="vehicle" value={form.vehicle} onChange={updateField} placeholder="2024 Tesla Model Y" required />
+            {form.services === 'Home & commercial tint' ? 'Tell us about your space' : 'Vehicle'}
+            <input name="vehicle" value={form.vehicle} onChange={updateField} placeholder={form.services === 'Home & commercial tint' ? 'Home, office, or storefront details' : '2024 Tesla Model Y'} required />
           </label>
           <label>
             Service interest
@@ -1016,6 +792,7 @@ function QuoteForm() {
               <option>Paint Protection Film</option>
               <option>Ceramic Coating</option>
               <option>PPF + Ceramic Coating</option>
+              <option>Home &amp; commercial tint</option>
             </select>
           </label>
           <label>

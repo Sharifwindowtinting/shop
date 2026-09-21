@@ -1,3 +1,6 @@
 @import './styles.css' screen and (min-width: 769px);
 @import './mobile.css' screen and (max-width: 768px);
 @import './quote-experience.css';
+@import './service-selector.css' screen and (min-width: 769px);
+@import './tint-shade.css';
+@import './package-motion.css';

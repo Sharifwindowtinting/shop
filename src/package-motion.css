@@ -1,0 +1,32 @@
+/* One short response per action; no loops, delays, or input blocking. */
+@media (prefers-reduced-motion: no-preference) {
+  .tint-shade-option-content,
+  .mobile-package-switch button {
+    transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 140ms ease;
+  }
+  .tint-shade-option:active .tint-shade-option-content,
+  .mobile-package-switch button:active { transform: scale(.97); }
+  .tint-shade-option input:checked + .tint-shade-option-content svg {
+    animation: package-check-in 180ms ease-out;
+  }
+  .ppf-coverage-reveal { animation: package-photo-in 260ms ease-out; }
+  .ppf-details-reveal { animation: package-details-in 220ms ease-out; }
+  .mobile-ppf, .tint-shade-picker { animation: package-details-in 240ms ease-out; }
+  #packages .button svg { transition: transform 180ms ease; }
+  @media (hover: hover) {
+    #packages .button:hover svg { transform: translateX(3px); }
+    .tint-shade-option:hover .tint-shade-option-content { box-shadow: 0 3px 10px #00000012; }
+  }
+}
+@keyframes package-photo-in { from { opacity: .5; } to { opacity: 1; } }
+@keyframes package-details-in { from { opacity: .5; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes package-check-in { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .ppf-coverage-reveal, .ppf-details-reveal, .mobile-ppf, .tint-shade-picker,
+  .tint-shade-option-content, .tint-shade-option-content svg,
+  .mobile-package-switch button, #packages .button svg {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

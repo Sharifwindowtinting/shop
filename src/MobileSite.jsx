@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import QuoteFeedback from './QuoteFeedback';
 import MobileComparisons from './MobileComparisons';
+import TintShadePicker from './TintShadePicker';
+import MobilePpfPackages from './MobilePpfPackages';
 
 export default function MobileSite() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [service, setService] = useState('Window tint');
   const [film, setFilm] = useState('');
+  const [tintShade, setTintShade] = useState(null);
+  const [packageType, setPackageType] = useState('tint');
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState(null);
   const [playing, setPlaying] = useState(false);
@@ -42,6 +46,7 @@ export default function MobileSite() {
     const button = event.target.closest('[data-service]');
     if (!button) return;
     setService(button.dataset.service);
+    if (button.dataset.service !== 'Window tint') setTintShade(null);
     setFilm(button.dataset.package || '');
     document.querySelector('#quote').scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth' });
     document.querySelector('#service').focus({ preventScroll: true });
@@ -68,7 +73,7 @@ export default function MobileSite() {
         body: JSON.stringify({
           ...Object.fromEntries(data),
           services: service,
-          message: [film && `Selected film: ${film}`, data.get('message')].filter(Boolean).join('\n'),
+          message: [film && `Selected ${service === 'Paint protection film' ? 'package' : 'film'}: ${film}`, service === 'Window tint' && tintShade !== null && `Preferred tint: ${tintShade}% VLT`, data.get('message')].filter(Boolean).join('\n'),
           contact: [data.get('phone'), data.get('email')].filter(Boolean).join(' / '),
           page: window.location.href,
         }),
@@ -77,6 +82,7 @@ export default function MobileSite() {
       if (!response.ok || !result.ok) throw new Error('Request not accepted');
       form.reset();
       setFilm('');
+      setTintShade(null);
       setStatus({type: 'success', message: 'Request sent. Sharif Window Tinting will follow up shortly.'});
     } catch (error) {
       setStatus({type: 'error', message: error.name === 'AbortError' ? 'Your request timed out. Your details are still here; please try again or call us.' : 'We couldn’t send your request. Your details are still here; please try again or call us.'});
@@ -132,7 +138,7 @@ export default function MobileSite() {
 </header>
 <nav id="navigation" aria-label="Primary navigation" hidden={!menuOpen} onClick={() => setMenuOpen(false)}>
 <a href="#services">Our services</a>
-<a href="#packages">Tint packages</a>
+<a href="#packages">Packages</a>
 <a href="#work">Our work</a>
 <a href="#visit">Visit the shop</a>
 <a href="#quote">Get a quote <svg>
@@ -226,18 +232,24 @@ export default function MobileSite() {
 <div className="section-title">
 <div>
 <div className="eyebrow">FIND YOUR FIT</div>
-<h2>A shade above.</h2>
+<h2>{packageType === 'tint' ? 'A shade above.' : 'Protect your paint.'}</h2>
 </div>
 <span className="section-number">02</span>
 </div>
+<div className="mobile-package-switch" role="group" aria-label="Package type">
+<button type="button" aria-pressed={packageType === 'tint'} onClick={() => setPackageType('tint')}>Window tint</button>
+<button type="button" aria-pressed={packageType === 'ppf'} onClick={() => setPackageType('ppf')}>Paint protection film</button>
+</div>
+{packageType === 'tint' ? <>
 <p className="intro">Choose your comfort level. We’ll help with the shade.</p>
+<TintShadePicker value={tintShade} onChange={setTintShade} />
 <article className="featured">
 <div className="featured-heading">
 <span>CERAMIC FILM</span>
 <span className="pill">FOR DAILY DRIVES</span>
 </div>
 <h3>Cool, calm.<br />Comfortably yours.</h3>
-<img src="/assets/package-ceramic-film-clean.png" width="1536" height="1024" alt="Side view of a white sedan with ceramic tinted windows" loading="lazy" />
+
 <div className="benefits">
 <span>Heat rejection</span>
 <span>UV protection</span>
@@ -278,6 +290,7 @@ export default function MobileSite() {
 </svg>
 </button>
 </details>
+</> : <MobilePpfPackages />}
 </section>
 <section className="work section" id="work">
 <div className="eyebrow">UP CLOSE. NO SHORTCUTS.</div>
@@ -311,14 +324,14 @@ export default function MobileSite() {
 <p className="intro">Tell us a little about what you need.</p>
 <form id="quote-form" onSubmit={submitQuote} aria-busy={sending}>
 
-<label>What are you interested in?<select id="service" name="services" value={service} onChange={event => {setService(event.target.value);setFilm('');}}>
+<label>What are you interested in?<select id="service" name="services" value={service} onChange={event => {setService(event.target.value);setFilm('');if(event.target.value !== 'Window tint') setTintShade(null);}}>
 <option>Window tint</option>
 <option>Paint protection film</option>
 <option>Ceramic coating</option>
 <option>Home &amp; commercial tint</option>
 </select>
 </label>
-{film && <p id="package-selection">Selected film: {film}</p>}
+{(film || (service === 'Window tint' && tintShade !== null)) && <p id="package-selection">{film && `Selected ${service === 'Paint protection film' ? 'package' : 'film'}: ${film}`}{service === 'Window tint' && tintShade !== null && `${film ? ' · ' : ''}Preferred tint: ${tintShade}%`}</p>}
 <label>{service === 'Home & commercial tint' ? 'Tell us about your space' : 'Your vehicle'}<input name="vehicle" required maxLength={180} placeholder={service === 'Home & commercial tint' ? 'e.g. Home with west-facing windows' : 'e.g. 2024 Tesla Model 3'} />
 </label>
 <div className="form-pair">
