@@ -22,6 +22,7 @@ import {
   X,
 } from 'lucide-react';
 import './responsive.css';
+import QuoteFeedback from './QuoteFeedback';
 import MobileSite from './MobileSite';
 import { comparisonItems } from './comparisonItems';
 
@@ -961,8 +962,10 @@ function QuoteForm() {
           action="/api/lead"
           method="POST"
           onSubmit={handleSubmit}
+          aria-busy={isSubmitting}
           data-reveal
         >
+
           <label className="quote-honeypot" aria-hidden="true">
             Website
             <input name="_honey" value={form._honey} onChange={updateField} tabIndex="-1" autoComplete="off" />
@@ -989,12 +992,17 @@ function QuoteForm() {
             Email
             <input
               name="email"
-              type="email"
+              type="email" pattern={String.raw`[^\s@]+@[^\s@]+\.[^\s@]+`}
+              required
+              inputMode="email"
+              autoCapitalize="none"
+              spellCheck={false}
               value={form.email}
               onChange={updateField}
               autoComplete="email"
               placeholder="you@example.com"
             />
+            <QuoteFeedback resetKey={statusType === 'success'} />
           </label>
           <label>
             Vehicle
@@ -1011,7 +1019,7 @@ function QuoteForm() {
             </select>
           </label>
           <label>
-            Notes
+            Notes (optional)
             <textarea
               name="message"
               value={form.message}

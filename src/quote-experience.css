@@ -1,0 +1,62 @@
+/* Shared quote interactions; keep motion brief and optional. */
+#quote form {
+  --quote-highlight: #e86d3f;
+  position: relative;
+  isolation: isolate;
+}
+#quote form :is(input, select, textarea) {
+  min-height: 48px;
+  font-size: 16px;
+  max-width: 100%;
+  scroll-margin-block: 130px;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+#quote form :is(input, select, textarea):focus-visible {
+  outline: 2px solid var(--quote-highlight);
+  outline-offset: 3px;
+  border-color: var(--quote-highlight);
+  box-shadow: 0 0 0 5px #e86d3f18;
+}
+#quote form label:focus-within { color: #a94322; }
+#quote form input[aria-invalid='true'] { border: 2px solid #b52f23; }
+#quote .quote-email-error { color: #a62e20; font-weight: 600; }
+#quote form .button { min-height: 52px; }
+#quote form .button svg { transition: transform 200ms ease; }
+@media (hover: hover) {
+  #quote form .button:not(:disabled):hover svg { transform: translateX(4px); }
+}
+#quote form[aria-busy='true'] button[type='submit']::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border: 2px solid #ffffff60;
+  border-top-color: white;
+  border-radius: 50%;
+  animation: quote-spin 800ms linear infinite;
+}
+#quote :is(#form-result, .form-status) { animation: quote-arrive 250ms ease-out; overflow-wrap: anywhere; }
+@keyframes quote-arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes quote-spin { to { transform: rotate(360deg); } }
+@media (min-width: 769px) {
+  #quote form label:focus-within { color: #ffaf86; }
+  #quote .quote-email-error { color: #ffb5a3; }
+}
+@media (max-width: 400px) {
+  #quote .form-pair { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #quote *, #quote *::before { animation: none !important; transition: none !important; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #quote .quote-entered > :is(label, .field-grid, .form-pair) {
+    animation: quote-arrive 350ms ease-out both;
+  }
+  #quote .quote-entered > :nth-child(3) { animation-delay: 40ms; }
+  #quote .quote-entered > :nth-child(4) { animation-delay: 80ms; }
+  #quote .quote-entered > :nth-child(5) { animation-delay: 120ms; }
+  #quote .quote-entered > :nth-child(6) { animation-delay: 160ms; }
+}
+
+#quote .quote-email-error { font-size: 12px; line-height: 1.5; }
+#quote .quote-email-error:empty { display: none; }

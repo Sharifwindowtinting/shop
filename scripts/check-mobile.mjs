@@ -44,6 +44,9 @@ try {
   await page.locator('input[name="name"]').fill('Test Customer');
   await page.locator('input[name="phone"]').fill('9165550123');
   await page.locator('textarea[name="message"]').fill('Side windows');
+  await page.getByRole('button', {name:'Send my quote request'}).click();
+  assert.equal(requests, 0, 'Missing email must block submission');
+  await page.locator('input[name="email"]').fill('test@example.com');
   reject = true;
   await page.getByRole('button', {name:'Send my quote request'}).click();
   await page.getByRole('alert').waitFor();

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import QuoteFeedback from './QuoteFeedback';
 import MobileComparisons from './MobileComparisons';
 
 export default function MobileSite() {
@@ -309,6 +310,7 @@ export default function MobileSite() {
 <h2>Your next upgrade<br />starts here.</h2>
 <p className="intro">Tell us a little about what you need.</p>
 <form id="quote-form" onSubmit={submitQuote} aria-busy={sending}>
+
 <label>What are you interested in?<select id="service" name="services" value={service} onChange={event => {setService(event.target.value);setFilm('');}}>
 <option>Window tint</option>
 <option>Paint protection film</option>
@@ -325,7 +327,8 @@ export default function MobileSite() {
 <label>Phone number<input name="phone" type="tel" autoComplete="tel" required maxLength={40} placeholder="(916) 555-0123" />
 </label>
 </div>
-<label>Email (optional)<input name="email" type="email" autoComplete="email" maxLength={160} placeholder="you@example.com" />
+<label>Email<input name="email" type="email" pattern={String.raw`[^\s@]+@[^\s@]+\.[^\s@]+`} required inputMode="email" autoCapitalize="none" spellCheck={false} autoComplete="email" maxLength={160} placeholder="you@example.com" />
+<QuoteFeedback resetKey={status?.type === 'success'} />
 </label>
 <label>Anything else? (optional)<textarea name="message" maxLength={1800} rows={3} placeholder="Shade, coverage, or timing you have in mind" />
 </label>

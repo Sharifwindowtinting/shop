@@ -36,3 +36,5 @@ The homepage renders the approved mobile design at widths up to 768px and the ex
 The mobile quote form posts to the existing `/api/lead` endpoint and includes selected film details in the message. It preserves entered details after an error, prevents duplicate submissions while sending, and supports property inquiries. Hero video playback respects reduced-motion preferences and includes a play/pause control.
 
 With the development server running and Google Chrome installed, run `node scripts/check-mobile.mjs` to check responsive layouts and interactions. Lead requests are intercepted by this check; it does not send email or create real leads. Use the existing Resend/Supabase environment configuration for actual submissions.
+
+Both quote layouts require a valid email address, enforced again by `/api/lead`. Shared feedback in `src/QuoteFeedback.jsx` shows inline email errors; `src/quote-experience.css` adds focus, entrance, sending, and result animations with reduced-motion support. Run `node scripts/check-quote.mjs` to verify email rejection, keyboard focus, form reset, and submissions at phone, tablet, and desktop widths without sending real leads.

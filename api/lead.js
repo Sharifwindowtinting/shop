@@ -257,6 +257,11 @@ export default async function handler(request, response) {
     const notes = clean(body.message || body.notes, 2000);
     const page = clean(body.page, 800);
     const { contact, email, phone } = resolveCustomerContact(body);
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      response.status(400).json({ ok: false, error: 'A valid email address is required.', field: 'email' });
+      return;
+    }
+
     const submittedAt = new Date().toISOString();
 
     if (!name || (!phone && !email && !contact) || !vehicle) {
