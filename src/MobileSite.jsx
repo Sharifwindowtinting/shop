@@ -154,7 +154,7 @@ export default function MobileSite() {
 <h1>Less heat.<br />More <em>style.</em>
 </h1>
 <p>Premium window tint & paint protection.<br />Made for your car. Built for California.</p>
-<a className="button primary" href="#quote">Find my perfect tint <svg>
+<a className="button primary" href="#quote">Find my perfect protection <svg>
 <use href="#arrow"/>
 </svg>
 </a>
@@ -242,7 +242,7 @@ export default function MobileSite() {
 </div>
 {packageType === 'tint' ? <>
 <p className="intro">Choose your comfort level. We’ll help with the shade.</p>
-<TintShadePicker value={tintShade} onChange={setTintShade} />
+<TintShadePicker value={tintShade} onChange={setTintShade} onHelp={() => { setService('Window tint'); setFilm(''); }} />
 <article className="featured">
 <div className="featured-heading">
 <span>CERAMIC FILM</span>

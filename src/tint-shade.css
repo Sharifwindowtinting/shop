@@ -19,7 +19,7 @@
 .tint-preview-label small { display:block; font-size:.6875rem; font-weight:400; color:#59616a; }
 .tint-preview-footer { display:grid; grid-template-columns:1fr auto; align-items:center; padding:12px 18px 18px; gap:8px; border-top:1px solid #e0e3e6; }
 .tint-shade-selection { margin:0; color:#303841; font-size:.8125rem; line-height:1.5; }
-.tint-shade-unsure { min-height:44px; background:none; color:#a23516; border:0; text-decoration:underline; padding:8px 0; font:inherit; font-size:.75rem; cursor:pointer; }
+.tint-shade-unsure { display:inline-flex; align-items:center; min-height:44px; background:none; color:#a23516; border:0; text-decoration:underline; padding:8px 0; font:inherit; font-size:.75rem; cursor:pointer; }
 .tint-shade-note { grid-column:1/-1; margin:0; font-size:.75rem; line-height:1.6; color:#59616a; }
 .quote-package-selection { padding:12px 16px; border-left:3px solid #f09b6d; font-size:.9375rem; background:#ffffff0a; }
 
@@ -44,3 +44,8 @@
   .tint-shade-note { font-size:.75rem; }
   .tint-shade-picker + .featured h3 { margin-bottom:18px; }
 }
+
+#packages .tint-shade-photo .tint-shade-frame { position:absolute; inset:0; opacity:0; pointer-events:none; transition:opacity 180ms ease; }
+#packages .tint-shade-photo .tint-shade-frame.is-active { opacity:1; }
+.tint-image-status { position:absolute; inset:30% 12px auto; padding:12px; border-radius:6px; background:#fffffff2; color:#303841; font-size:.8125rem; text-align:center; }
+@media(prefers-reduced-motion:reduce) { #packages .tint-shade-photo .tint-shade-frame { transition:none; } }

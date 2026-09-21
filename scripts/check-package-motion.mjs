@@ -6,22 +6,17 @@ try {
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  await page.goto('http://127.0.0.1:5173/');
  await page.locator('.tint-shade-picker').scrollIntoViewIfNeeded();
- const initial=Number(await page.locator('feFuncR').getAttribute('slope'));
- const early = await page.evaluate(async () => {
-   document.querySelector('input[name="tint-shade"][value="5"]').click();
-   await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-   return Number(document.querySelector('feFuncR').getAttribute('slope'));
- });
- const target=Math.pow(5/70,1.35);
- assert.ok(early<=initial&&early>target,'Glass should transition instead of jumping');
- await page.waitForFunction(target=>Math.abs(Number(document.querySelector('feFuncR').getAttribute('slope'))-target)<0.0001,target);
- // Retarget several times without allowing the earlier transitions to finish.
+ await page.waitForFunction(()=>[...document.querySelectorAll('.tint-shade-frame')].every(img=>img.complete&&img.naturalWidth));
+ await page.locator('input[name="tint-shade"][value="5"]').evaluate(el=>el.click());
+ await page.waitForFunction(()=>document.querySelector('.tint-shade-frame.is-active').dataset.shade==='5');
+ assert.equal(await page.locator('.tint-shade-frame.is-active').evaluate(el=>getComputedStyle(el).transitionDuration),'0.18s');
  await page.locator('input[name="tint-shade"][value="70"]').evaluate(el=>el.click());
  await page.locator('input[name="tint-shade"][value="20"]').evaluate(el=>el.click());
- await page.waitForFunction(()=>Math.abs(Number(document.querySelector('feFuncR').getAttribute('slope'))-Math.pow(20/70,1.35))<0.0001);
+ await page.waitForFunction(()=>document.querySelector('.tint-shade-frame.is-active').dataset.shade==='20');
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.locator('input[name="tint-shade"][value="70"]').evaluate(el=>el.click());
- await page.waitForFunction(()=>Number(document.querySelector('feFuncR').getAttribute('slope'))===1);
+ await page.waitForFunction(()=>document.querySelector('.tint-shade-frame.is-active').dataset.shade==='70');
+ assert.equal(await page.locator('.tint-shade-frame.is-active').evaluate(el=>getComputedStyle(el).transitionDuration),'0s');
  const switches=page.getByRole('group',{name:'Package type'});
  await switches.getByRole('button',{name:'Paint protection film'}).click();
  assert.equal(await page.locator('.ppf-coverage-reveal').evaluate(el=>getComputedStyle(el).animationName),'none');

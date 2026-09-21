@@ -8,7 +8,7 @@ try {
  for(const value of [5,20,35,50,70]) {
   await page.locator(`.tint-shade-option input[value="${value}"]`).check({force:true});
   assert.equal(await page.locator('.tint-shade-option input:checked').inputValue(),String(value));
-  assert.ok(Math.abs(Number(await page.locator('.tint-shade-photo feFuncR').getAttribute('slope'))-Math.pow(value/70,1.35))<0.001);
+  await page.waitForFunction(v => document.querySelector('.tint-shade-frame.is-active')?.dataset.shade === String(v), value);
  }
  await page.locator('.tint-shade-option input[value="20"]').check({force:true});
  await page.locator('.package-actions').getByRole('link',{name:'Start quote'}).click();
@@ -21,7 +21,7 @@ try {
  await page.getByRole('button',{name:'PPF Packages',exact:true}).click();assert.equal(await page.locator('.tint-shade-picker').count(),0);
  await page.getByRole('button',{name:'Window Tint',exact:true}).click();
  for(const width of [769,1024,1440]) {await page.setViewportSize({width,height:1000});assert.ok(await page.locator('.tint-shade-picker').evaluate(el=>el.scrollWidth<=el.clientWidth));}
- await page.locator('.tint-shade-photo img').evaluate(img=>img.loading='eager');await page.waitForFunction(()=>document.querySelector('.tint-shade-photo img').naturalWidth>0);
+ await page.locator('.tint-shade-photo img').evaluateAll(images=>images.forEach(img=>img.loading='eager'));await page.waitForFunction(()=>document.querySelector('.tint-shade-photo img').naturalWidth>0);
  await page.addStyleTag({content:'.site-header,.floating-call{visibility:hidden!important}'});await page.locator('.tint-shade-picker').screenshot({path:'artifacts/tint-shades.png'});
  await page.setViewportSize({width:390,height:844});await page.waitForSelector('#hero-video');assert.equal(await page.locator('.tint-shade-picker').count(),1);
  console.log('Passed: all shades, glass transmission, quote payload, no-preference option, PPF exclusion, desktop widths, mobile selector present. No lead sent.');

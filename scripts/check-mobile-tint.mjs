@@ -27,7 +27,7 @@ try {
  await page.locator('.tint-shade-option').filter({has:page.locator('input[value="35"]')}).tap();
  await page.locator('#services [data-service="Paint protection film"]').tap();
  assert.equal(await page.locator('.tint-shade-option input:checked').count(),0);
- await page.locator('.tint-shade-photo img').evaluate(img=>img.loading='eager');await page.waitForFunction(()=>document.querySelector('.tint-shade-photo img').naturalWidth>0);
+ await page.locator('.tint-shade-photo img').evaluateAll(images=>images.forEach(img=>img.loading='eager'));await page.waitForFunction(()=>document.querySelector('.tint-shade-photo img').naturalWidth>0);
  await page.addStyleTag({content:'header,.bottom-bar{visibility:hidden!important}'});
  await page.locator('.tint-shade-picker').screenshot({path:'artifacts/mobile-tint-picker.png'});
  console.log('Passed: touch selection and target sizes at 5 phone/tablet widths, no overflow, unchanged services, film/shade quote payload, success reset, non-tint reset. No real lead sent.');

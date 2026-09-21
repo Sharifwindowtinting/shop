@@ -364,7 +364,11 @@ function Packages() {
           </div>
           <div className="package-detail">
             {activeGroup.key === 'tint' ? (
-              <TintShadePicker value={tintShade} onChange={setTintShade} />
+              <TintShadePicker value={tintShade} onChange={setTintShade} onHelp={() => {
+                window.dispatchEvent(new CustomEvent('quote-package', { detail: {
+                  services: 'Window Tint', film: activeOption.name, shade: null,
+                } }));
+              }} />
             ) : (
               <div className={`package-visual package-visual-${activeGroup.key} coverage-${activeOption.coverage}`}>
                 <img className="ppf-coverage-reveal" key={activeVisual} src={activeVisual} alt={activeAlt} loading="lazy" {...imageSize(activeVisual)} />
