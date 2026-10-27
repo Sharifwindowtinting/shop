@@ -2146,19 +2146,18 @@ main > section:not(.hero)::before {
   align-items: center;
   justify-content: center;
   gap: clamp(10px, 1.2vw, 20px);
-  border: 1px solid rgba(255, 106, 45, 0.72);
-  border-radius: 8px;
-  background:
-    linear-gradient(180deg, rgba(17, 19, 24, 0.92), rgba(7, 8, 11, 0.9)),
-    linear-gradient(90deg, rgba(255, 106, 45, 0.2), rgba(255, 106, 45, 0.06));
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #bd3d18;
   color: #ffffff;
   padding: clamp(9px, 0.9vw, 14px) clamp(18px, 2.1vw, 38px);
   font-size: clamp(0.68rem, 1.15vw, 1.22rem);
-  font-weight: 950;
+  font-weight: 600;
   line-height: 1;
-  text-transform: uppercase;
+  text-transform: none;
+  letter-spacing: 0.01em;
   white-space: nowrap;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  box-shadow: none;
   text-shadow: none;
   pointer-events: none;
   transform: translateY(0);
@@ -2168,15 +2167,28 @@ main > section:not(.hero)::before {
 .offer-live-cta svg {
   flex: 0 0 auto;
   stroke-width: 2;
-  animation: offerCtaArrow 1.55s ease-in-out infinite;
+  animation: none;
+  width: 18px;
+  height: 18px;
+  transition: transform 180ms ease;
 }
 
 .offer-banner:hover .offer-live-cta,
 .offer-banner:focus-visible .offer-live-cta {
-  border-color: rgba(255, 126, 68, 0.9);
-  background:
-    linear-gradient(180deg, rgba(255, 106, 45, 0.96), rgba(214, 45, 8, 0.94));
-  transform: translateY(-1px);
+  border-color: transparent;
+  background: #aa3414;
+  transform: none;
+}
+
+.offer-banner:hover .offer-live-cta svg,
+.offer-banner:focus-visible .offer-live-cta svg { transform: translateX(3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .offer-live-cta, .offer-live-cta svg { transition: none; }
+  .offer-banner:hover .offer-live-cta,
+  .offer-banner:focus-visible .offer-live-cta,
+  .offer-banner:hover .offer-live-cta svg,
+  .offer-banner:focus-visible .offer-live-cta svg { transform: none; }
 }
 
 @keyframes offerSheen {
