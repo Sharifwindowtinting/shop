@@ -4,3 +4,5 @@
 @import './service-selector.css' screen and (min-width: 769px);
 @import './tint-shade.css';
 @import './package-motion.css';
+
+@import './hero-refinement.css' screen and (min-width: 769px);

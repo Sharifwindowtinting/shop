@@ -180,10 +180,11 @@ function Hero() {
       </div>
       <div className="container hero-shell">
         <div className="hero-copy" data-reveal>
-          <p className="eyebrow">Sacramento & Elk Grove vehicle protection studio</p>
-          <h1>Protect. Tint. Shine.</h1>
+          <p className="eyebrow">Sacramento &amp; Elk Grove</p>
+          <h1><span>Protect.</span>{' '}<span>Tint.</span>{' '}<span>Shine.</span></h1>
           <p className="hero-lede">
-            Window tint, paint protection film, and ceramic coating installed with clean edges, deep gloss, and daily-driver durability.
+            Window tint, paint protection film, and ceramic coating.
+            A cooler drive. A finish worth protecting.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#quote">

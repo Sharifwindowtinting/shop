@@ -1,0 +1,83 @@
+/* Desktop hero: keep the footage visible and the next action easy to find. */
+.hero {
+  min-height: min(840px, 100svh);
+  padding: 148px 0 40px;
+}
+.hero .hero-shell {
+  min-height: 610px;
+  padding-bottom: 0;
+  justify-content: space-between;
+  gap: 64px;
+}
+.hero .hero-copy { max-width: 660px; }
+.hero .eyebrow {
+  margin-bottom: 26px;
+  font-size: 12px;
+  letter-spacing: .19em;
+}
+.hero h1 {
+  max-width: none;
+  font-size: clamp(76px, 7.2vw, 104px);
+  line-height: .91;
+  letter-spacing: -.015em;
+  font-weight: 700;
+  text-shadow: 0 3px 24px rgb(0 0 0 / 20%);
+}
+.hero h1 span { display: block; }
+.hero h1 span + span { margin-top: 0; }
+.hero .hero-lede {
+  max-width: 480px;
+  margin-top: 28px;
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 400;
+  color: #e0e1e3;
+}
+.hero .hero-actions { margin-top: 30px; gap: 16px; }
+.hero .hero-actions .button { min-height: 52px; padding-inline: 22px; }
+.hero .button-primary { box-shadow: none; }
+.hero .button-secondary {
+  background: rgb(10 12 15 / 35%);
+  backdrop-filter: none;
+}
+.hero .hero-proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  width: 100%;
+  max-width: none;
+  padding-top: 20px;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+}
+.hero .hero-proof a {
+  min-height: 44px;
+  padding: 0;
+  gap: 10px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e0e1e3;
+}
+.hero .hero-proof a:last-child { margin-left: auto; }
+.hero .hero-proof a:hover { color: #fff; background: transparent; }
+.hero a:focus-visible { outline: 2px solid #ff925f; outline-offset: 6px; }
+.hero .hero-shine { display: none; }
+.hero .hero-bg::after {
+  background:
+    linear-gradient(90deg, rgb(5 6 9 / 94%) 0%, rgb(5 6 9 / 80%) 32%, rgb(5 6 9 / 34%) 70%, rgb(5 6 9 / 24%) 100%),
+    linear-gradient(180deg, rgb(5 6 9 / 30%), transparent 40%, rgb(5 6 9 / 85%) 100%);
+}
+@media (max-width: 1050px) {
+  .hero { padding-top: 130px; }
+  .hero h1 { font-size: 82px; }
+  .hero .hero-proof { gap: 8px 24px; }
+  .hero .hero-proof a:last-child { margin-left: 0; }
+}
+@media (max-height: 800px) {
+  .hero { padding-top: 120px; padding-bottom: 24px; }
+  .hero .hero-shell { min-height: 540px; gap: 36px; }
+  .hero h1 { font-size: clamp(72px, 7vw, 96px); }
+}
